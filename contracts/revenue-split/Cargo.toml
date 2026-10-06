@@ -1,0 +1,11 @@
+[package]
+name = "revenue-split"
+version = "0.1.0"
+edition = "2021"
+description = "Shared library: fixed-percentage revenue split computation with deterministic remainder handling"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+soroban-sdk = { workspace = true }

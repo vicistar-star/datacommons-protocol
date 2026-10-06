@@ -1,0 +1,11 @@
+[package]
+name = "license-token"
+version = "0.1.0"
+edition = "2021"
+description = "LicenseToken contract: license purchase, revenue split execution, access enforcement, query metering, and revocation"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+soroban-sdk = { workspace = true }

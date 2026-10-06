@@ -1,0 +1,11 @@
+[package]
+name = "dataset-registry"
+version = "0.1.0"
+edition = "2021"
+description = "DatasetRegistry contract: dataset registration with consent hash, contributor splits, price, and access terms"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+soroban-sdk = { workspace = true }
