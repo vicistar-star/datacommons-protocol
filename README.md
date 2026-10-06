@@ -4,10 +4,6 @@
 
 DataCommons Protocol lets researchers in health, agriculture, and climate science — especially in the Global South, where data infrastructure and monetization channels are weakest — mint verifiable access tokens for their datasets, license them to universities and companies for stablecoin payment, and have revenue split automatically and transparently among every contributor, with a full on-chain provenance and consent trail.
 
-> **Repository:** `datacommons-protocol`
-> **Chain:** Stellar (Soroban smart contracts)
-> **Status:** Design + MVP scaffold
-
 ---
 
 ## Table of Contents
