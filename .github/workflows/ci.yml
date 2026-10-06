@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: Contracts
+            dir: contracts
+            run: soroban contract build
+          - name: Backend
+            dir: backend
+            run: npm run build
+          - name: Frontend
+            dir: frontend
+            run: npm run build
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: Contract Tests
+            dir: contracts
+            run: cargo test
+          - name: Backend Tests
+            dir: backend
+            run: npm test
+          - name: Frontend Tests
+            dir: frontend
+            run: npm test
