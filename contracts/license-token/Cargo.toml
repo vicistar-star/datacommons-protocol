@@ -9,3 +9,9 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 soroban-sdk = { workspace = true }
+dataset-registry = { path = "../dataset-registry" }
+revenue-split = { path = "../revenue-split" }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
+dataset-registry = { path = "../dataset-registry", features = ["testutils"] }
