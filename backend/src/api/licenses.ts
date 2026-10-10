@@ -1,8 +1,9 @@
 /**
- * POST /licenses/purchase  — confirm a buyer's signed on-chain purchase
- *                            transaction and sync into the local licenses cache.
- * GET  /licenses/mine      — list the authenticated wallet's licenses,
- *                            live-checked against check_access on-chain.
+ * POST /licenses/build-purchase — build an unsigned purchase XDR for the buyer to sign.
+ * POST /licenses/purchase       — confirm a buyer's signed on-chain purchase
+ *                                 transaction and sync into the local licenses cache.
+ * GET  /licenses/mine           — list the authenticated wallet's licenses,
+ *                                 live-checked against check_access on-chain.
  */
 
 import { Router, Request, Response } from 'express';
@@ -12,6 +13,7 @@ import {
   submitSignedTransaction,
   checkAccess,
   licenseContractId,
+  buildPurchaseTx,
 } from '../chain/client';
 import {
   Contract,
@@ -92,6 +94,31 @@ async function syncLicenseFromChain(txHash: string, buyerAddress: string): Promi
     return null;
   }
 }
+
+// ---------------------------------------------------------------------------
+// POST /licenses/build-purchase
+// Builds the unsigned Soroban transaction XDR for the buyer to sign.
+// ---------------------------------------------------------------------------
+router.post('/build-purchase', async (req: Request, res: Response) => {
+  const { dataset_contract_id, buyer_address, payment_token } = req.body as {
+    dataset_contract_id: string;
+    buyer_address: string;
+    payment_token: string;
+  };
+
+  if (!dataset_contract_id || !buyer_address || !payment_token) {
+    res.status(400).json({ error: 'dataset_contract_id, buyer_address, and payment_token are required' });
+    return;
+  }
+
+  const unsignedXdr = await buildPurchaseTx({
+    buyerAddress: buyer_address,
+    datasetId: BigInt(dataset_contract_id),
+    paymentToken: payment_token,
+  });
+
+  res.json({ unsigned_xdr: unsignedXdr });
+});
 
 // ---------------------------------------------------------------------------
 // POST /licenses/purchase
